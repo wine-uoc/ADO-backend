@@ -12,6 +12,8 @@ volumes:
   mainflux-things-db-volume:
   mainflux-things-redis-volume:
   mainflux-es-redis-volume:
+  mainflux-influxdb-volume:
+  mainflux-grafana-volume:
 
 services:
   nginx:
@@ -236,3 +238,84 @@ services:
       - mainflux-base-net
     environment:
       MF_UI_PORT: ${MF_UI_PORT}
+
+  influxdb:
+    image: influxdb:1.6.4-alpine
+    container_name: mainflux-influxdb
+    restart: on-failure
+    environment:
+      INFLUXDB_DB: mainflux
+      INFLUXDB_ADMIN_USER: mainflux
+      INFLUXDB_ADMIN_PASSWORD: mainflux
+    networks:
+      - mainflux-base-net
+    ports:
+      - ${MF_INFLUX_WRITER_DB_PORT}:${MF_INFLUX_WRITER_DB_PORT}
+    volumes:
+      - mainflux-influxdb-volume:/var/lib/influxdb
+
+  influxdb-writer:
+    image: mainflux/influxdb-writer:latest
+    container_name: mainflux-influxdb-writer
+    depends_on:
+      - influxdb
+    restart: on-failure
+    environment:
+      MF_INFLUX_WRITER_LOG_LEVEL: debug
+      MF_NATS_URL: ${MF_NATS_URL}
+      MF_INFLUX_WRITER_PORT: ${MF_INFLUX_WRITER_PORT}
+      MF_INFLUX_WRITER_BATCH_SIZE: ${MF_INFLUX_WRITER_BATCH_SIZE}
+      MF_INFLUX_WRITER_BATCH_TIMEOUT: ${MF_INFLUX_WRITER_BATCH_TIMEOUT}
+      MF_INFLUX_WRITER_DB_NAME: ${MF_INFLUX_WRITER_DB_NAME}
+      MF_INFLUX_WRITER_DB_HOST: mainflux-influxdb
+      MF_INFLUX_WRITER_DB_PORT: ${MF_INFLUX_WRITER_DB_PORT}
+      MF_INFLUX_WRITER_DB_USER: ${MF_INFLUX_WRITER_DB_USER}
+      MF_INFLUX_WRITER_DB_PASS: ${MF_INFLUX_WRITER_DB_PASS}
+    ports:
+      - ${MF_INFLUX_WRITER_PORT}:${MF_INFLUX_WRITER_PORT}
+    networks:
+      - mainflux-base-net
+    volumes:
+      - /home/ubuntu/mainflux/docker/addons/influxdb-writer/channels.toml:/config/channels.toml
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: mainflux-grafana
+    depends_on:
+      - influxdb
+    restart: on-failure
+    environment:
+      - GF_SECURITY_ALLOW_EMBEDDING=${MF_ALLOW_EMBEDDING}
+      - GF_SECURITY_COOKIE_SAMESITE=none
+      - GF_SECURITY_COOKIE_SECURE=${MF_ALLOW_EMBEDDING}
+      - GF_PANELS_DISABLE_SANITIZE_HTML=${MF_ALLOW_EMBEDDING}
+            #- GF_SECURITY_ALLOW_EMBEDDING: ${MF_ALLOW_EMBEDDING}
+    ports:
+      - ${MF_INFLUX_WRITER_GRAFANA_PORT}:${MF_GRAFANA_PORT}
+    networks:
+      - mainflux-base-net
+    volumes:
+      - mainflux-grafana-volume:/var/lib/grafana
+        #  - /home/ubuntu/mainflux/docker/grafana_defaults.ini:/etc/grafana/grafana.ini
+ 
+  influxdb-reader:
+    image: mainflux/influxdb-reader:latest
+    container_name: mainflux-influxdb-reader
+    depends_on:
+      - influxdb-writer
+    restart: on-failure
+    environment:
+      MF_INFLUX_READER_LOG_LEVEL: debug
+      MF_THINGS_URL: things:${MF_THINGS_AUTH_GRPC_PORT}
+      MF_INFLUX_READER_PORT: ${MF_INFLUX_READER_PORT}
+      MF_INFLUX_READER_DB_NAME: ${MF_INFLUX_READER_DB_NAME}
+      MF_INFLUX_READER_DB_HOST: mainflux-influxdb
+      MF_INFLUX_READER_DB_PORT: ${MF_INFLUX_READER_DB_PORT}
+      MF_INFLUX_READER_DB_USER: ${MF_INFLUX_READER_DB_USER}
+      MF_INFLUX_READER_DB_PASS: ${MF_INFLUX_READER_DB_PASS}
+      MF_JAEGER_URL: ${MF_JAEGER_URL}
+    ports:
+      - ${MF_INFLUX_READER_PORT}:${MF_INFLUX_READER_PORT}
+    networks:
+      - mainflux-base-net
+
