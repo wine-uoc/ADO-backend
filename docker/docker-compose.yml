@@ -229,7 +229,7 @@ services:
       - mainflux-base-net
 
   ui:
-    image: mainflux/ui:latest
+    image: isuciu0/mainflux-ui:11-12-2019
     container_name: mainflux-ui
     restart: on-failure
     ports:
@@ -276,7 +276,7 @@ services:
     networks:
       - mainflux-base-net
     volumes:
-      - /home/ubuntu/mainflux/docker/addons/influxdb-writer/channels.toml:/config/channels.toml
+      - /home/ubuntu/ADO_interface/mainflux/docker/addons/influxdb-writer/channels.toml:/config/channels.toml 
 
   grafana:
     image: grafana/grafana:latest
