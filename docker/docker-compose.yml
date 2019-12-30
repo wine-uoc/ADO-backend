@@ -264,7 +264,7 @@ services:
       - mainflux-base-net
 
   ui:
-    image: mainflux/ui:latest
+    image: isuciu0/mainflux-ui:30-12-2019
     container_name: mainflux-ui
     restart: on-failure
     ports:
@@ -290,7 +290,7 @@ services:
       - mainflux-influxdb-volume:/var/lib/influxdb
 
   influxdb-writer:
-    image: mainflux/influxdb-writer:latest
+    image: isuciu0/mainflux-influxdb-writer:30-12-2019
     container_name: mainflux-influxdb-writer
     depends_on:
       - influxdb
