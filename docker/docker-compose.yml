@@ -334,7 +334,7 @@ services:
         #  - /home/ubuntu/mainflux/docker/grafana_defaults.ini:/etc/grafana/grafana.ini
  
   influxdb-reader:
-    image: mainflux/influxdb-reader:latest
+    image: isuciu0/mainflux-influxdb-reader:02-01-2020
     container_name: mainflux-influxdb-reader
     depends_on:
       - influxdb-writer

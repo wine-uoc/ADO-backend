@@ -16,7 +16,10 @@ import (
 
 const countCol = "count"
 
-var _ readers.MessageRepository = (*influxRepository)(nil)
+var (
+	_         readers.MessageRepository = (*influxRepository)(nil)
+	q_channel string
+)
 
 type influxRepository struct {
 	database string
@@ -32,11 +35,12 @@ func New(client influxdata.Client, database string) readers.MessageRepository {
 }
 
 func (repo *influxRepository) ReadAll(chanID string, offset, limit uint64, query map[string]string) (readers.MessagesPage, error) {
+	q_channel = chanID
 	condition := fmtCondition(chanID, query)
 	cmd := fmt.Sprintf(`SELECT * FROM messages WHERE %s ORDER BY time DESC LIMIT %d OFFSET %d`, condition, limit, offset)
 	q := influxdata.Query{
 		Command:  cmd,
-		Database: repo.database,
+		Database: q_channel, //repo.database,
 	}
 
 	ret := []senml.Message{}
@@ -75,7 +79,7 @@ func (repo *influxRepository) count(condition string) (uint64, error) {
 	cmd := fmt.Sprintf(`SELECT COUNT(protocol) FROM messages WHERE %s`, condition)
 	q := influxdata.Query{
 		Command:  cmd,
-		Database: repo.database,
+		Database: q_channel, //repo.database,
 	}
 
 	resp, err := repo.client.Query(q)
