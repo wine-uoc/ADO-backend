@@ -264,7 +264,7 @@ services:
       - mainflux-base-net
 
   ui:
-    image: isuciu0/mainflux-ui:30-12-2019
+    image: isuciu0/mainflux-ui:04-01-2020
     container_name: mainflux-ui
     restart: on-failure
     ports:
@@ -321,9 +321,9 @@ services:
     restart: on-failure
     environment:
       - GF_SECURITY_ALLOW_EMBEDDING=${MF_ALLOW_EMBEDDING}
-      - GF_SECURITY_COOKIE_SAMESITE=none
-      - GF_SECURITY_COOKIE_SECURE=${MF_ALLOW_EMBEDDING}
-      - GF_PANELS_DISABLE_SANITIZE_HTML=${MF_ALLOW_EMBEDDING}
+        #- GF_SECURITY_COOKIE_SAMESITE=none
+        #- GF_SECURITY_COOKIE_SECURE=${MF_ALLOW_EMBEDDING}
+        #- GF_PANELS_DISABLE_SANITIZE_HTML=${MF_ALLOW_EMBEDDING}
             #- GF_SECURITY_ALLOW_EMBEDDING: ${MF_ALLOW_EMBEDDING}
     ports:
       - ${MF_INFLUX_WRITER_GRAFANA_PORT}:${MF_GRAFANA_PORT}
