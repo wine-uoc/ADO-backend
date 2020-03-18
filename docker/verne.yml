@@ -9,7 +9,7 @@ services:
       - mqtt-adapter
 
   mqtt-adapter:
-    image: mainflux/mqtt-verne:latest
+    image: mainflux/mqtt-verne:0.10.0
     container_name: mainflux-mqtt
     depends_on:
       - things
