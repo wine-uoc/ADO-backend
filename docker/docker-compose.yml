@@ -321,10 +321,7 @@ services:
     restart: on-failure
     environment:
       - GF_SECURITY_ALLOW_EMBEDDING=${MF_ALLOW_EMBEDDING}
-        #- GF_SECURITY_COOKIE_SAMESITE=none
-        #- GF_SECURITY_COOKIE_SECURE=${MF_ALLOW_EMBEDDING}
-        #- GF_PANELS_DISABLE_SANITIZE_HTML=${MF_ALLOW_EMBEDDING}
-            #- GF_SECURITY_ALLOW_EMBEDDING: ${MF_ALLOW_EMBEDDING}
+      - GF_INSTALL_PLUGINS=ryantxu-ajax-panel
     ports:
       - ${MF_INFLUX_WRITER_GRAFANA_PORT}:${MF_GRAFANA_PORT}
     networks:
