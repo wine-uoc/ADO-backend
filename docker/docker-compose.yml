@@ -322,6 +322,7 @@ services:
     environment:
       - GF_SECURITY_ALLOW_EMBEDDING=${MF_ALLOW_EMBEDDING}
       - GF_INSTALL_PLUGINS=ryantxu-ajax-panel
+      - GF_PANELS_DISABLE_SANITIZE_HTML=true
     ports:
       - ${MF_INFLUX_WRITER_GRAFANA_PORT}:${MF_GRAFANA_PORT}
     networks:
