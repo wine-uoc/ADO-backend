@@ -24,6 +24,7 @@ var (
 	q_channel    string
 	quote        string
 	final_error  error
+	topic 		 string
 )
 
 type influxRepo struct {
@@ -81,7 +82,7 @@ func (repo *influxRepo) Save(messages ...senml.Message) error {
 		sec, dec := math.Modf(msg.Time)
 		t := time.Unix(int64(sec), int64(dec*(1e9)))
 
-		pt, err := influxdata.NewPoint(pointName, tgs, flds, t)
+		pt, err := influxdata.NewPoint(topic, tgs, flds, t)
 		if err != nil {
 			return err
 		}
@@ -95,6 +96,7 @@ func (repo *influxRepo) tagsOf(msg *senml.Message) tags {
 	quote = "\""
 	q_channel = quote + msg.Channel + quote
 	channel = msg.Channel
+	topic = msg.Topic
 	return tags{
 		"channel":   msg.Channel,
 		"subtopic":  msg.Subtopic,

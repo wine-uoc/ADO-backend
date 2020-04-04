@@ -264,7 +264,7 @@ services:
       - mainflux-base-net
 
   ui:
-    image: isuciu0/mainflux-ui:04-01-2020
+    image: mainflux/ui:0.10.0
     container_name: mainflux-ui
     restart: on-failure
     ports:
@@ -290,7 +290,7 @@ services:
       - mainflux-influxdb-volume:/var/lib/influxdb
 
   influxdb-writer:
-    image: isuciu0/mainflux-influxdb-writer:30-12-2019
+    image: isuciu0/mainflux-influxdb-writer:04-04-2020
     container_name: mainflux-influxdb-writer
     depends_on:
       - influxdb
@@ -311,7 +311,7 @@ services:
     networks:
       - mainflux-base-net
     volumes:
-      - /home/ubuntu/mainflux/docker/addons/influxdb-writer/channels.toml:/config/channels.toml 
+      - /home/uoc/UOC/Mainflux_Stuff/ADO-mainflux/mainflux/docker/addons/influxdb-writer/channels.toml:/config/channels.toml 
 
   grafana:
     image: grafana/grafana:latest

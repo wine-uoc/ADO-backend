@@ -25,11 +25,12 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 // Message represents a message emitted by the Mainflux adapters layer.
 type Message struct {
 	Channel              string   `protobuf:"bytes,1,opt,name=channel,proto3" json:"channel,omitempty"`
-	Subtopic             string   `protobuf:"bytes,2,opt,name=subtopic,proto3" json:"subtopic,omitempty"`
-	Publisher            string   `protobuf:"bytes,3,opt,name=publisher,proto3" json:"publisher,omitempty"`
-	Protocol             string   `protobuf:"bytes,4,opt,name=protocol,proto3" json:"protocol,omitempty"`
-	ContentType          string   `protobuf:"bytes,5,opt,name=contentType,proto3" json:"contentType,omitempty"`
-	Payload              []byte   `protobuf:"bytes,6,opt,name=payload,proto3" json:"payload,omitempty"`
+	Topic                string   `protobuf:"bytes,2,opt,name=topic,proto3" json:"topic,omitempty"`
+	Subtopic             string   `protobuf:"bytes,3,opt,name=subtopic,proto3" json:"subtopic,omitempty"`
+	Publisher            string   `protobuf:"bytes,4,opt,name=publisher,proto3" json:"publisher,omitempty"`
+	Protocol             string   `protobuf:"bytes,5,opt,name=protocol,proto3" json:"protocol,omitempty"`
+	ContentType          string   `protobuf:"bytes,6,opt,name=contentType,proto3" json:"contentType,omitempty"`
+	Payload              []byte   `protobuf:"bytes,7,opt,name=payload,proto3" json:"payload,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -71,6 +72,13 @@ var xxx_messageInfo_Message proto.InternalMessageInfo
 func (m *Message) GetChannel() string {
 	if m != nil {
 		return m.Channel
+	}
+	return ""
+}
+
+func (m *Message) GetTopic() string {
+	if m != nil {
+		return m.Topic
 	}
 	return ""
 }
@@ -161,33 +169,40 @@ func (m *Message) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.Payload)
 		i = encodeVarintMessage(dAtA, i, uint64(len(m.Payload)))
 		i--
-		dAtA[i] = 0x32
+		dAtA[i] = 0x3A
 	}
 	if len(m.ContentType) > 0 {
 		i -= len(m.ContentType)
 		copy(dAtA[i:], m.ContentType)
 		i = encodeVarintMessage(dAtA, i, uint64(len(m.ContentType)))
 		i--
-		dAtA[i] = 0x2a
+		dAtA[i] = 0x32
 	}
 	if len(m.Protocol) > 0 {
 		i -= len(m.Protocol)
 		copy(dAtA[i:], m.Protocol)
 		i = encodeVarintMessage(dAtA, i, uint64(len(m.Protocol)))
 		i--
-		dAtA[i] = 0x22
+		dAtA[i] = 0x2a
 	}
 	if len(m.Publisher) > 0 {
 		i -= len(m.Publisher)
 		copy(dAtA[i:], m.Publisher)
 		i = encodeVarintMessage(dAtA, i, uint64(len(m.Publisher)))
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x22
 	}
 	if len(m.Subtopic) > 0 {
 		i -= len(m.Subtopic)
 		copy(dAtA[i:], m.Subtopic)
 		i = encodeVarintMessage(dAtA, i, uint64(len(m.Subtopic)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Topic) > 0 {
+		i -= len(m.Topic)
+		copy(dAtA[i:], m.Topic)
+		i = encodeVarintMessage(dAtA, i, uint64(len(m.Topic)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -219,6 +234,10 @@ func (m *Message) Size() (n int) {
 	var l int
 	_ = l
 	l = len(m.Channel)
+	if l > 0 {
+		n += 1 + l + sovMessage(uint64(l))
+	}
+	l = len(m.Topic)
 	if l > 0 {
 		n += 1 + l + sovMessage(uint64(l))
 	}
@@ -317,6 +336,38 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Topic", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessage
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMessage
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMessage
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Topic = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Subtopic", wireType)
 			}
 			var stringLen uint64
@@ -347,7 +398,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 			}
 			m.Subtopic = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 3:
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Publisher", wireType)
 			}
@@ -379,7 +430,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 			}
 			m.Publisher = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 4:
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Protocol", wireType)
 			}
@@ -411,7 +462,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 			}
 			m.Protocol = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 5:
+		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ContentType", wireType)
 			}
@@ -443,7 +494,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 			}
 			m.ContentType = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 6:
+		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Payload", wireType)
 			}

@@ -162,7 +162,13 @@ nats.subscribe('channel.>', {
 function parseTopic(topic) {
     // Topics are in the form `channels/<channel_id>/messages`
     // Subtopic's are in the form `channels/<channel_id>/messages/<subtopic>`
-    return /^channels\/(.+?)\/messages\/?.*$/.exec(topic);
+    if (/^channels\/(.+?)\/control\/?.*$/.exec(topic) !== null){
+        return /^channels\/(.+?)\/control\/?.*$/.exec(topic);
+
+    }else {
+        return /^channels\/(.+?)\/messages\/?.*$/.exec(topic);
+    }
+    
 }
 
 aedes.authorizePublish = function (client, packet, publish) {
@@ -184,6 +190,7 @@ aedes.authorizePublish = function (client, packet, publish) {
             return value !== '';
         },
         parts = packet.topic.split('/'),
+        msgtopic = parts.slice(baseLength-1, baseLength)[0],
         elements = parts.slice(baseLength).join('.').split('.').filter(isEmpty),
         baseTopic = 'channel.' + channelId;
     // Remove empty elements
@@ -211,12 +218,14 @@ aedes.authorizePublish = function (client, packet, publish) {
                 msg = Message.encode({
                     publisher: client.thingId,
                     channel: channelId,
+                    topic : msgtopic,
                     subtopic: st.join('.'),
                     contentType: contentType,
                     protocol: 'mqtt',
                     payload: packet.payload
                 }).finish();
-
+                var err = new Error(msg);
+                logger.warn(err);
                 nats.publish(channelTopic, msg);
 
                 publish(null);

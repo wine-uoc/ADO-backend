@@ -11,6 +11,7 @@ const (
 // Message represents a resolved (normalized) SenML record.
 type Message struct {
 	Channel     string   `json:"channel,omitempty"`
+	Topic	    string   `json:"topic,omitempty"`
 	Subtopic    string   `json:"subtopic,omitempty"`
 	Publisher   string   `json:"publisher,omitempty"`
 	Protocol    string   `json:"protocol,omitempty"`

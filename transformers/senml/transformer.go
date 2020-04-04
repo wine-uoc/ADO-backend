@@ -41,6 +41,7 @@ func (n transformer) Transform(msg mainflux.Message) (interface{}, error) {
 	for i, v := range normalized.Records {
 		msgs[i] = Message{
 			Channel:     msg.Channel,
+			Topic:		 msg.Topic,
 			Subtopic:    msg.Subtopic,
 			Publisher:   msg.Publisher,
 			Protocol:    msg.Protocol,
