@@ -315,7 +315,7 @@ services:
       - /home/uoc/UOC/Mainflux_Stuff/ADO-mainflux/mainflux/docker/addons/influxdb-writer/channels.toml:/config/channels.toml 
 
   grafana:
-    image: grafana/grafana:latest
+    image: isuciu0/grafana:16-09-2020
     container_name: mainflux-grafana
     depends_on:
       - influxdb
@@ -324,6 +324,7 @@ services:
       - GF_SECURITY_ALLOW_EMBEDDING=${MF_ALLOW_EMBEDDING}
       - GF_INSTALL_PLUGINS=ryantxu-ajax-panel
       - GF_PANELS_DISABLE_SANITIZE_HTML=true
+      - GF_USERS_DEFAULT_THEME=dark
     ports:
       - ${MF_INFLUX_WRITER_GRAFANA_PORT}:${MF_GRAFANA_PORT}
     networks:
