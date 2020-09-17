@@ -333,6 +333,7 @@ services:
       - ./grafana/grafana_icon.svg:/usr/share/grafana/public/img/grafana_icon.svg
       - ./grafana/fav32.png:/usr/share/grafana/public/img/fav32.png
       - ./grafana/Branding/Branding.tsx:/usr/share/grafana/public/app/core/components/Branding/Branding.tsx
+      - ./grafana/Views/index.html:/usr/share/grafana/public/views/index.html
       - ./grafana/Build/app.js:/usr/share/grafana/public/build/app.4141596c10e564d57dfb.js #to be changed to final when product ready
  
   influxdb-reader:
