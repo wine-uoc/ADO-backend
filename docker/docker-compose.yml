@@ -291,7 +291,7 @@ services:
       - mainflux-influxdb-volume:/var/lib/influxdb
 
   influxdb-writer:
-    image: isuciu0/mainflux-influxdb-writer:04-04-2020
+    image: isuciu0/mainflux-influxdb-writer:29-10-2020
     container_name: mainflux-influxdb-writer
     depends_on:
       - influxdb

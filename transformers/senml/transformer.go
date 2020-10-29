@@ -44,6 +44,7 @@ func (n transformer) Transform(msg mainflux.Message) (interface{}, error) {
 			Topic:		 msg.Topic,
 			Subtopic:    msg.Subtopic,
 			Publisher:   msg.Publisher,
+			Devname:     msg.Devname,
 			Protocol:    msg.Protocol,
 			Name:        v.Name,
 			Unit:        v.Unit,

@@ -14,6 +14,7 @@ type Message struct {
 	Topic	    string   `json:"topic,omitempty"`
 	Subtopic    string   `json:"subtopic,omitempty"`
 	Publisher   string   `json:"publisher,omitempty"`
+	Devname     string   `json:"devname,omitempty"`
 	Protocol    string   `json:"protocol,omitempty"`
 	Name        string   `json:"name,omitempty"`
 	Unit        string   `json:"unit,omitempty"`

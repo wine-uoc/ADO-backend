@@ -101,6 +101,7 @@ func (repo *influxRepo) tagsOf(msg *senml.Message) tags {
 		"channel":   msg.Channel,
 		"subtopic":  msg.Subtopic,
 		"publisher": msg.Publisher,
+		"devname":   msg.Devname,
 		"name":      msg.Name,
 	}
 }

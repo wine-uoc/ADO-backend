@@ -21,7 +21,7 @@ services:
       - mainflux-mqtt-redis-volume:/data
 
   mqtt-adapter:
-    image: isuciu0/mainflux-mqtt:04-04-2020
+    image: isuciu0/mainflux-mqtt:29-10-2020
     container_name: mainflux-mqtt
     depends_on:
       - things
