@@ -1,4 +1,4 @@
-# Copyright (c) Mainflux
+﻿# Copyright (c) Mainflux
 # SPDX-License-Identifier: Apache-2.0
 
 version: "3.7"
@@ -368,7 +368,7 @@ services:
       - mainflux-base-net
 
   user-control:
-    image: isuciu0/user-control:14-12-2020
+    image: isuciu0/user-control:15-12-2020
     container_name: mainflux-user-control
     depends_on:
       - things
@@ -379,6 +379,7 @@ services:
       MF_USER_CONTROL_POSTGRES_HOST: mainflux-things-db
       MF_USER_CONTROL_POSTGRES_PORT: ${MF_THINGS_DB_PORT}
       MF_USER_CONTROL_POSTGRES_DB: ${MF_THINGS_DB}
+      MF_USER_CONTROL_GRAFANA_PORT: ${MF_INFLUX_WRITER_GRAFANA_PORT}
     networks:
       - mainflux-base-net
 
