@@ -368,7 +368,7 @@ services:
       - mainflux-base-net
 
   user-control:
-    image: isuciu0/user-control:21-01-2021
+    image: isuciu0/user-control:27-01-2021
     container_name: mainflux-user-control
     depends_on:
       - things
@@ -382,6 +382,8 @@ services:
       MF_USER_CONTROL_GRAFANA_PORT: ${MF_INFLUX_WRITER_GRAFANA_PORT}
       MF_USER_CONTROL_GRAFANA_ADMIN_NAME: admin
       MF_USER_CONTROL_GRAFANA_ADMIN_PASS: admin
+      MF_USER_CONTROL_MAIL_USERNAME: ${MF_RECOVERY_EMAIL}
+      MF_USER_CONTROL_MAIL_PASSWORD: ${MF_RECOVERY_EMAIL_PASSWORD}
     networks:
       - mainflux-base-net
 
