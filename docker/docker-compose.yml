@@ -312,7 +312,7 @@ services:
     networks:
       - mainflux-base-net
     volumes:
-      -./addons/influxdb-writer/channels.toml:/config/channels.toml 
+      - ./addons/influxdb-writer/channels.toml:/config/channels.toml 
 
   grafana:
     image: grafana/grafana:latest-ubuntu
