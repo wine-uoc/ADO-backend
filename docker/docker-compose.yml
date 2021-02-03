@@ -264,17 +264,6 @@ services:
     networks:
       - mainflux-base-net
 
-#  ui:
-#    image: mainflux/ui:0.10.0
-#    container_name: mainflux-ui
-#    restart: on-failure
-#    ports:
-#      - ${MF_UI_PORT}:${MF_UI_PORT}
-#    networks:
-#      - mainflux-base-net
-#    environment:
-#      MF_UI_PORT: ${MF_UI_PORT}
-
   influxdb:
     image: influxdb:1.6.4-alpine
     container_name: mainflux-influxdb
@@ -375,8 +364,8 @@ services:
       MF_USER_CONTROL_POSTGRES_PORT: ${MF_THINGS_DB_PORT}
       MF_USER_CONTROL_POSTGRES_DB: ${MF_THINGS_DB}
       MF_USER_CONTROL_GRAFANA_PORT: ${MF_INFLUX_WRITER_GRAFANA_PORT}
-      MF_USER_CONTROL_GRAFANA_ADMIN_NAME: admin
-      MF_USER_CONTROL_GRAFANA_ADMIN_PASS: admin
+      MF_USER_CONTROL_GRAFANA_ADMIN_NAME: ${MF_GRAFANA_ADMIN_NAME}
+      MF_USER_CONTROL_GRAFANA_ADMIN_PASS: ${MF_GRAFANA_ADMIN_PASS}
       MF_USER_CONTROL_MAIL_USERNAME: ${MF_RECOVERY_EMAIL}
       MF_USER_CONTROL_MAIL_PASSWORD: ${MF_RECOVERY_EMAIL_PASSWORD}
     networks:
