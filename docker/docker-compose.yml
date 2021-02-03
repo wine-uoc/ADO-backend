@@ -311,6 +311,8 @@ services:
     restart: on-failure
     environment:
       - GF_SECURITY_ALLOW_EMBEDDING=${MF_ALLOW_EMBEDDING}
+      - GF_SECURITY_ADMIN_USER=${MF_GRAFANA_ADMIN_NAME}
+      - GF_SECURITY_ADMIN_PASSWORD={MF_GRAFANA_ADMIN_PASS}      
       - GF_INSTALL_PLUGINS=ryantxu-ajax-panel
       - GF_PANELS_DISABLE_SANITIZE_HTML=true
       - GF_USERS_DEFAULT_THEME=light
