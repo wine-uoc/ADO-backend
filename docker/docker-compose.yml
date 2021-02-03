@@ -1,4 +1,4 @@
-# Copyright (c) Mainflux
+﻿# Copyright (c) Mainflux
 # SPDX-License-Identifier: Apache-2.0
 
 version: "3.7"
@@ -264,16 +264,16 @@ services:
     networks:
       - mainflux-base-net
 
-  ui:
-    image: mainflux/ui:0.10.0
-    container_name: mainflux-ui
-    restart: on-failure
-    ports:
-      - ${MF_UI_PORT}:${MF_UI_PORT}
-    networks:
-      - mainflux-base-net
-    environment:
-      MF_UI_PORT: ${MF_UI_PORT}
+#  ui:
+#    image: mainflux/ui:0.10.0
+#    container_name: mainflux-ui
+#    restart: on-failure
+#    ports:
+#      - ${MF_UI_PORT}:${MF_UI_PORT}
+#    networks:
+#      - mainflux-base-net
+#    environment:
+#      MF_UI_PORT: ${MF_UI_PORT}
 
   influxdb:
     image: influxdb:1.6.4-alpine
@@ -291,7 +291,7 @@ services:
       - mainflux-influxdb-volume:/var/lib/influxdb
 
   influxdb-writer:
-    image: isuciu0/mainflux-influxdb-writer:04-04-2020
+    image: isuciu0/mainflux-influxdb-writer:04-12-2020
     container_name: mainflux-influxdb-writer
     depends_on:
       - influxdb
@@ -315,7 +315,7 @@ services:
       - ./addons/influxdb-writer/channels.toml:/config/channels.toml
 
   grafana:
-    image: grafana/grafana:latest-ubuntu
+    image: isuciu0/grafana:alpine-7.3.4
     container_name: mainflux-grafana
     depends_on:
       - influxdb
@@ -325,16 +325,21 @@ services:
       - GF_INSTALL_PLUGINS=ryantxu-ajax-panel
       - GF_PANELS_DISABLE_SANITIZE_HTML=true
       - GF_USERS_DEFAULT_THEME=light
-    ports:
-      - ${MF_INFLUX_WRITER_GRAFANA_PORT}:${MF_GRAFANA_PORT}
+      - GF_SMTP_ENABLED=true
+      - GF_SMTP_HOST=smtp.gmail.com:465
+      - GF_SMTP_USER=${MF_RECOVERY_EMAIL}
+      - GF_SMTP_PASSWORD=${MF_RECOVERY_EMAIL_PASSWORD}
+      - GF_SMTP_FROM_ADDRESS=${MF_RECOVERY_EMAIL}
+      - GF_SMTP_FROM_NAME=ADO-RECOVERY
+      - GF_SMTP_SKIP_VERIFY=true
+      - GF_SERVER_DOMAIN=localhost
+      - GF_SERVER_HTTP_PORT=${MF_INFLUX_WRITER_GRAFANA_PORT}
+    expose:
+      - ${MF_INFLUX_WRITER_GRAFANA_PORT}
     networks:
       - mainflux-base-net
     volumes:
-      - ./grafana/grafana_icon.svg:/usr/share/grafana/public/img/grafana_icon.svg
-      - ./grafana/fav32.png:/usr/share/grafana/public/img/fav32.png
-      - ./grafana/Branding/Branding.tsx:/usr/share/grafana/public/app/core/components/Branding/Branding.tsx
-      - ./grafana/Views/index.html:/usr/share/grafana/public/views/index.html
-      - ./grafana/Build/app.js:/usr/share/grafana/public/build/app.4141596c10e564d57dfb.js #to be changed to final when product ready
+      - mainflux-grafana-volume:/var/lib/grafana
  
   influxdb-reader:
     image: isuciu0/mainflux-influxdb-reader:02-01-2020
@@ -358,7 +363,7 @@ services:
       - mainflux-base-net
 
   user-control:
-    image: isuciu0/user-control:26-10-2020
+    image: isuciu0/user-control:27-01-2021
     container_name: mainflux-user-control
     depends_on:
       - things
@@ -369,6 +374,11 @@ services:
       MF_USER_CONTROL_POSTGRES_HOST: mainflux-things-db
       MF_USER_CONTROL_POSTGRES_PORT: ${MF_THINGS_DB_PORT}
       MF_USER_CONTROL_POSTGRES_DB: ${MF_THINGS_DB}
+      MF_USER_CONTROL_GRAFANA_PORT: ${MF_INFLUX_WRITER_GRAFANA_PORT}
+      MF_USER_CONTROL_GRAFANA_ADMIN_NAME: admin
+      MF_USER_CONTROL_GRAFANA_ADMIN_PASS: admin
+      MF_USER_CONTROL_MAIL_USERNAME: ${MF_RECOVERY_EMAIL}
+      MF_USER_CONTROL_MAIL_PASSWORD: ${MF_RECOVERY_EMAIL_PASSWORD}
     networks:
       - mainflux-base-net
 

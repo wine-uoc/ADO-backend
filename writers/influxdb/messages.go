@@ -101,7 +101,9 @@ func (repo *influxRepo) tagsOf(msg *senml.Message) tags {
 		"channel":   msg.Channel,
 		"subtopic":  msg.Subtopic,
 		"publisher": msg.Publisher,
+		"devname":   msg.Devname,
 		"name":      msg.Name,
+		"unit":      msg.Unit,
 	}
 }
 
@@ -109,7 +111,6 @@ func (repo *influxRepo) fieldsOf(msg *senml.Message) fields {
 	updateTime := strconv.FormatFloat(msg.UpdateTime, 'f', -1, 64)
 	ret := fields{
 		"protocol":   msg.Protocol,
-		"unit":       msg.Unit,
 		"updateTime": updateTime,
 	}
 

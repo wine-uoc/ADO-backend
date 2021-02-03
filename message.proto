@@ -10,7 +10,8 @@ message Message {
 	string topic	   = 2;	
 	string subtopic    = 3;
 	string publisher   = 4;
-	string protocol    = 5;
-	string contentType = 6;
-	bytes  payload     = 7;
+	string devname     = 5;
+	string protocol    = 6;
+	string contentType = 7;
+	bytes  payload     = 8;
 }

@@ -217,6 +217,7 @@ aedes.authorizePublish = function (client, packet, publish) {
             if (!err) {
                 msg = Message.encode({
                     publisher: client.thingId,
+                    devname: client.id,
                     channel: channelId,
                     topic : msgtopic,
                     subtopic: st.join('.'),

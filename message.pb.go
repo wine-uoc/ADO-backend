@@ -28,9 +28,10 @@ type Message struct {
 	Topic                string   `protobuf:"bytes,2,opt,name=topic,proto3" json:"topic,omitempty"`
 	Subtopic             string   `protobuf:"bytes,3,opt,name=subtopic,proto3" json:"subtopic,omitempty"`
 	Publisher            string   `protobuf:"bytes,4,opt,name=publisher,proto3" json:"publisher,omitempty"`
-	Protocol             string   `protobuf:"bytes,5,opt,name=protocol,proto3" json:"protocol,omitempty"`
-	ContentType          string   `protobuf:"bytes,6,opt,name=contentType,proto3" json:"contentType,omitempty"`
-	Payload              []byte   `protobuf:"bytes,7,opt,name=payload,proto3" json:"payload,omitempty"`
+	Devname              string   `protobuf:"bytes,5,opt,name=devname,proto3" json:"devname,omitempty"`
+	Protocol             string   `protobuf:"bytes,6,opt,name=protocol,proto3" json:"protocol,omitempty"`
+	ContentType          string   `protobuf:"bytes,7,opt,name=contentType,proto3" json:"contentType,omitempty"`
+	Payload              []byte   `protobuf:"bytes,8,opt,name=payload,proto3" json:"payload,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -93,6 +94,13 @@ func (m *Message) GetSubtopic() string {
 func (m *Message) GetPublisher() string {
 	if m != nil {
 		return m.Publisher
+	}
+	return ""
+}
+
+func (m *Message) GetDevname() string {
+	if m != nil {
+		return m.Devname
 	}
 	return ""
 }
@@ -169,21 +177,28 @@ func (m *Message) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.Payload)
 		i = encodeVarintMessage(dAtA, i, uint64(len(m.Payload)))
 		i--
-		dAtA[i] = 0x3A
+		dAtA[i] = 0x42
 	}
 	if len(m.ContentType) > 0 {
 		i -= len(m.ContentType)
 		copy(dAtA[i:], m.ContentType)
 		i = encodeVarintMessage(dAtA, i, uint64(len(m.ContentType)))
 		i--
-		dAtA[i] = 0x32
+		dAtA[i] = 0x3A
 	}
 	if len(m.Protocol) > 0 {
 		i -= len(m.Protocol)
 		copy(dAtA[i:], m.Protocol)
 		i = encodeVarintMessage(dAtA, i, uint64(len(m.Protocol)))
 		i--
-		dAtA[i] = 0x2a
+		dAtA[i] = 0x32
+	}
+	if len(m.Devname) > 0 {
+		i -= len(m.Devname)
+		copy(dAtA[i:], m.Devname)
+		i = encodeVarintMessage(dAtA, i, uint64(len(m.Devname)))
+		i--
+		dAtA[i] = 0x2A
 	}
 	if len(m.Publisher) > 0 {
 		i -= len(m.Publisher)
@@ -197,7 +212,7 @@ func (m *Message) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.Subtopic)
 		i = encodeVarintMessage(dAtA, i, uint64(len(m.Subtopic)))
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x1A
 	}
 	if len(m.Topic) > 0 {
 		i -= len(m.Topic)
@@ -211,7 +226,7 @@ func (m *Message) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.Channel)
 		i = encodeVarintMessage(dAtA, i, uint64(len(m.Channel)))
 		i--
-		dAtA[i] = 0xa
+		dAtA[i] = 0xA
 	}
 	return len(dAtA) - i, nil
 }
@@ -246,6 +261,10 @@ func (m *Message) Size() (n int) {
 		n += 1 + l + sovMessage(uint64(l))
 	}
 	l = len(m.Publisher)
+	if l > 0 {
+		n += 1 + l + sovMessage(uint64(l))
+	}
+	l = len(m.Devname)
 	if l > 0 {
 		n += 1 + l + sovMessage(uint64(l))
 	}
@@ -432,6 +451,38 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Devname", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMessage
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthMessage
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthMessage
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Devname = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Protocol", wireType)
 			}
 			var stringLen uint64
@@ -462,7 +513,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 			}
 			m.Protocol = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 6:
+		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ContentType", wireType)
 			}
@@ -494,7 +545,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 			}
 			m.ContentType = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 7:
+		case 8:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Payload", wireType)
 			}
