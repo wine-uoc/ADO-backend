@@ -304,7 +304,7 @@ services:
       - ./addons/influxdb-writer/channels.toml:/config/channels.toml
 
   grafana:
-    image: isuciu0/grafana:alpine-7.3.4
+    image: grafana/grafana:7.4.0 #isuciu0/grafana:alpine-7.3.4
     container_name: mainflux-grafana
     depends_on:
       - influxdb
@@ -314,6 +314,7 @@ services:
       - GF_SECURITY_ADMIN_USER=${MF_GRAFANA_ADMIN_NAME}
       - GF_SECURITY_ADMIN_PASSWORD={MF_GRAFANA_ADMIN_PASS}      
       - GF_INSTALL_PLUGINS=ryantxu-ajax-panel
+      - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=ryantxu-ajax-panel
       - GF_PANELS_DISABLE_SANITIZE_HTML=true
       - GF_USERS_DEFAULT_THEME=light
       - GF_SMTP_ENABLED=true
@@ -330,6 +331,12 @@ services:
     networks:
       - mainflux-base-net
     volumes:
+      - ./grafana/grafana_icon.svg:/usr/share/grafana/public/img/grafana_icon.svg
+      - ./grafana/fav32.png:/usr/share/grafana/public/img/fav32.png
+      - ./grafana/branding/Branding.tsx:/usr/share/grafana/public/app/core/components/Branding/Branding.tsx
+      - ./grafana/views/index.html:/usr/share/grafana/public/views/index.html
+      - ./grafana/views/error.html:/usr/share/grafana/public/views/error.html
+      - ./grafana/build/app.43bf9cf1b45c36f23b7a.js:/usr/share/grafana/public/build/app.43bf9cf1b45c36f23b7a.js
       - mainflux-grafana-volume:/var/lib/grafana
  
   influxdb-reader:
