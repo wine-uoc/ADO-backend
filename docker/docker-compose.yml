@@ -361,7 +361,7 @@ services:
       - mainflux-base-net
 
   user-control:
-    image: isuciu0/user-control:27-01-2021
+    image: isuciu0/user-control:09-02-2021
     container_name: mainflux-user-control
     depends_on:
       - things
@@ -377,6 +377,10 @@ services:
       MF_USER_CONTROL_GRAFANA_ADMIN_PASS: ${MF_GRAFANA_ADMIN_PASS}
       MF_USER_CONTROL_MAIL_USERNAME: ${MF_RECOVERY_EMAIL}
       MF_USER_CONTROL_MAIL_PASSWORD: ${MF_RECOVERY_EMAIL_PASSWORD}
+      MF_AJAX_HTTP_PROTOCOL: https
+      MF_AJAX_SERVER_IP: 127.0.0.1
+    volumes:
+      - ./dashboards:/app/grafana_backend/dashboards
     networks:
       - mainflux-base-net
 
