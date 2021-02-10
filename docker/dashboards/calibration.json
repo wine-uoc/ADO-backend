@@ -49,7 +49,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1612799902500,
+  "iteration": 1612962891009,
   "links": [],
   "panels": [
     {
@@ -133,7 +133,7 @@
           "timeShift": null,
           "title": "Air CO2 Calibration",
           "type": "ryantxu-ajax-panel",
-          "url": "http://35.180.121.29/control/CAL/$Publisher/$Topic/sensors/AirCO2",
+          "url": "https://35.180.121.29/control/CAL/$Publisher/$Topic/sensors/AirCO2",
           "withCredentials": false
         },
         {
@@ -367,7 +367,7 @@
           "timeShift": null,
           "title": "Dissolved Oxygen Calibration",
           "type": "ryantxu-ajax-panel",
-          "url": "https://127.0.0.1/control/CAL/$Publisher/$Topic/sensors/Oxygen",
+          "url": "https://35.180.121.29/control/CAL/$Publisher/$Topic/sensors/Oxygen",
           "withCredentials": false
         },
         {
@@ -699,12 +699,12 @@
           "id": 28,
           "options": {
             "colorMode": "value",
-            "graphMode": "area",
+            "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "auto",
             "reduceOptions": {
               "calcs": [
-                "mean"
+                "last"
               ],
               "fields": "",
               "values": false
@@ -812,12 +812,12 @@
           "id": 25,
           "options": {
             "colorMode": "value",
-            "graphMode": "area",
+            "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "auto",
             "reduceOptions": {
               "calcs": [
-                "mean"
+                "last"
               ],
               "fields": "",
               "values": false
@@ -955,7 +955,7 @@
           "timeShift": null,
           "title": "Conductivity Calibration",
           "type": "ryantxu-ajax-panel",
-          "url": "https://127.0.0.1/control/CAL/$Publisher/$Topic/sensors/Conductivity2",
+          "url": "https://35.180.121.29/control/CAL/$Publisher/$Topic/sensors/Conductivity2",
           "withCredentials": false
         },
         {
@@ -1150,12 +1150,12 @@
           "id": 20,
           "options": {
             "colorMode": "value",
-            "graphMode": "area",
+            "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "auto",
             "reduceOptions": {
               "calcs": [
-                "mean"
+                "last"
               ],
               "fields": "",
               "values": false
@@ -1289,7 +1289,7 @@
           "timeShift": null,
           "title": "Conductivity Calibration",
           "type": "ryantxu-ajax-panel",
-          "url": "https://127.0.0.1/control/CAL/$Publisher/$Topic/sensors/Conductivity1",
+          "url": "https://35.180.121.29/control/CAL/$Publisher/$Topic/sensors/Conductivity1",
           "withCredentials": false
         },
         {
@@ -1484,12 +1484,12 @@
           "id": 14,
           "options": {
             "colorMode": "value",
-            "graphMode": "area",
+            "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "auto",
             "reduceOptions": {
               "calcs": [
-                "mean"
+                "last"
               ],
               "fields": "",
               "values": false
@@ -1593,12 +1593,12 @@
           "id": 9,
           "options": {
             "colorMode": "value",
-            "graphMode": "area",
+            "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "auto",
             "reduceOptions": {
               "calcs": [
-                "mean"
+                "last"
               ],
               "fields": "",
               "values": false
@@ -1674,7 +1674,7 @@
             "h": 11,
             "w": 9,
             "x": 0,
-            "y": 5
+            "y": 17
           },
           "header_js": "{}",
           "id": 2,
@@ -1732,7 +1732,7 @@
           "timeShift": null,
           "title": "pH Calibration",
           "type": "ryantxu-ajax-panel",
-          "url": "https://127.0.0.1/control/CAL/$Publisher/$Topic/sensors/pH",
+          "url": "https://35.180.121.29/control/CAL/$Publisher/$Topic/sensors/pH",
           "withCredentials": false
         },
         {
@@ -1753,7 +1753,7 @@
             "h": 8,
             "w": 12,
             "x": 9,
-            "y": 5
+            "y": 17
           },
           "hiddenSeries": false,
           "id": 13,
@@ -1922,17 +1922,17 @@
             "h": 3,
             "w": 6,
             "x": 9,
-            "y": 13
+            "y": 25
           },
           "id": 15,
           "options": {
             "colorMode": "value",
-            "graphMode": "area",
+            "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "auto",
             "reduceOptions": {
               "calcs": [
-                "mean"
+                "last"
               ],
               "fields": "",
               "values": false
@@ -2035,17 +2035,17 @@
             "h": 3,
             "w": 6,
             "x": 15,
-            "y": 13
+            "y": 25
           },
           "id": 8,
           "options": {
             "colorMode": "value",
-            "graphMode": "area",
+            "graphMode": "none",
             "justifyMode": "auto",
             "orientation": "auto",
             "reduceOptions": {
               "calcs": [
-                "mean"
+                "last"
               ],
               "fields": "",
               "values": false
@@ -2220,5 +2220,5 @@
   "timezone": "",
   "title": "Calibration",
   "uid": "lTtlUdpMk",
-  "version": 4
+  "version": 7
 }
