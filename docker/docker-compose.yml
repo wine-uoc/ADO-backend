@@ -361,7 +361,7 @@ services:
       - mainflux-base-net
 
   user-control:
-    image: isuciu0/user-control:10-02-2021
+    image: isuciu0/user-control:15-02-2021
     container_name: mainflux-user-control
     depends_on:
       - things
