@@ -53,7 +53,7 @@
   "links": [],
   "panels": [
     {
-      "content": "----\n## Aqüicultura Digital Oberta\n----\n\n\n",
+      "content": "----\n## Open Digital Aquaculture\n----\n\n\n",
       "datasource": "$DB",
       "description": "",
       "fieldConfig": {
@@ -71,7 +71,7 @@
       "id": 4,
       "mode": "markdown",
       "options": {
-        "content": "----\n## Aqüicultura Digital Oberta\n----\n\n\n",
+        "content": "----\n## Open Digital Aquaculture\n----\n\n\n",
         "mode": "markdown"
       },
       "pluginVersion": "7.1.0",
@@ -107,7 +107,7 @@
       "tags": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Panells disponibles",
+      "title": "Available Dashboards",
       "transparent": true,
       "type": "dashlist"
     },
@@ -175,7 +175,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Alertes del sistema",
+      "title": "System Alerts",
       "transparent": true,
       "type": "alertlist"
     }
@@ -224,7 +224,7 @@
     ]
   },
   "timezone": "",
-  "title": "Principal",
+  "title": "~Home Dashboard~",
   "uid": "0Q1rv4WGk",
   "version": 3
 }

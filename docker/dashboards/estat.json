@@ -74,7 +74,7 @@
     }
   ],
   "panels": [
-    {
+    { "content": "----\n## Open Digital Aquaculture\n----\n Per device sensor status and sensor sampling rate configuration. Select the device you want to configure from the drop-down list.\n\n",
       "datasource": "$DB",
       "description": "",
       "fieldConfig": {
@@ -91,7 +91,7 @@
       },
       "id": 276,
       "options": {
-        "content": "----\n## Aqüicultura Digital Oberta\n----\n\n\n",
+        "content": "----\n## Open Digital Aquaculture\n----\n Per device sensor status and sensor sampling rate configuration. Select the device you want to configure from the drop-down list.\n\n",
         "mode": "markdown"
       },
       "pluginVersion": "7.4.0",
@@ -1816,7 +1816,7 @@
           "dashes": false,
           "datasource": "$DB",
           "decimals": null,
-          "description": "Mostra els valors del sensor en temps",
+          "description": "",
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -1962,7 +1962,7 @@
           "dashes": false,
           "datasource": "$DB",
           "decimals": null,
-          "description": "Mostra els valors del sensor en temps",
+          "description": "",
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -2109,7 +2109,7 @@
           "dashes": false,
           "datasource": "$DB",
           "decimals": null,
-          "description": "Mostra els valors del sensor en temps",
+          "description": "",
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -2256,7 +2256,7 @@
           "dashes": false,
           "datasource": "$DB",
           "decimals": null,
-          "description": "Mostra els valors del sensor en temps",
+          "description": "",
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -2403,7 +2403,7 @@
           "dashes": false,
           "datasource": "$DB",
           "decimals": null,
-          "description": "Mostra els valors del sensor en temps",
+          "description": "",
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -2550,7 +2550,7 @@
           "dashes": false,
           "datasource": "$DB",
           "decimals": null,
-          "description": "Mostra els valors del sensor en temps",
+          "description": "",
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -2697,7 +2697,7 @@
           "dashes": false,
           "datasource": "$DB",
           "decimals": null,
-          "description": "Mostra els valors del sensor en temps",
+          "description": "",
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -2844,7 +2844,7 @@
           "dashes": false,
           "datasource": "$DB",
           "decimals": null,
-          "description": "Mostra els valors del sensor en temps",
+          "description": "",
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -2991,7 +2991,7 @@
           "dashes": false,
           "datasource": "$DB",
           "decimals": null,
-          "description": "Mostra els valors del sensor en temps",
+          "description": "",
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -3138,7 +3138,7 @@
           "dashes": false,
           "datasource": "$DB",
           "decimals": null,
-          "description": "Mostra els valors del sensor en temps",
+          "description": "",
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -3285,7 +3285,7 @@
           "dashes": false,
           "datasource": "$DB",
           "decimals": null,
-          "description": "Mostra els valors del sensor en temps",
+          "description": "",
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -6096,7 +6096,7 @@
     ]
   },
   "timezone": "",
-  "title": "Estat sensors",
+  "title": "Device Configuration",
   "uid": "zLj7W6iMk",
   "version": 10
 }

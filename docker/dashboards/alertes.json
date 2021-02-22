@@ -69,7 +69,7 @@
   ],
   "panels": [
     {
-      "content": "----\n## Aqüicultura Digital Oberta\n----\nEs mostren les alertes de temperatura del dispositiu.\n\n",
+      "content": "----\n## Open Digital Aquaculture\n----\nAllows for setting alarm thresholds for each sensor type. The alarms are identical for all active devices.\n\n",
       "datasource": "",
       "description": "",
       "fieldConfig": {
@@ -87,7 +87,7 @@
       "id": 6,
       "mode": "markdown",
       "options": {
-        "content": "----\n## Aqüicultura Digital Oberta\n----\nShows the configured alerts for the devices\n\n",
+        "content": "----\n## Open Digital Aquaculture\n----\nAllows for setting alarm thresholds for each sensor type. The alarms are identical for all active devices.\n\n",
         "mode": "markdown"
       },
       "pluginVersion": "7.1.0",
@@ -3241,7 +3241,7 @@
     ]
   },
   "timezone": "",
-  "title": "Alertes",
+  "title": "System Alerts",
   "uid": "_QuLzfWGk",
   "version": 7
 }

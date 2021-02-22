@@ -61,7 +61,7 @@
   ],
   "panels": [
     {
-      "content": "----\n## Aqüicultura Digital Oberta\n----\nEs mostra un gràfic per cada sensor. A cada gràfic es representen superposades les mostres de tots els dispositius actius. Cada mostra representa la mitjana dels últims 10 segons.\n\n",
+      "content": "----\n## Open Digital Aquaculture\n----\n A panel for each sensor, collecting the data from all the active devices.\n\n",
       "datasource": "$DB",
       "description": "",
       "fieldConfig": {
@@ -79,7 +79,7 @@
       "id": 4,
       "mode": "markdown",
       "options": {
-        "content": "----\n## Aqüicultura Digital Oberta\n----\nEs mostra un gràfic per cada sensor. A cada gràfic es representen superposades les mostres de tots els dispositius actius. Cada mostra representa la mitjana dels últims 10 segons.\n\n",
+        "content": "----\n## Open Digital Aquaculture\n----\n A panel for each sensor, collecting the data from all the active devices.\n\n",
         "mode": "markdown"
       },
       "pluginVersion": "7.1.0",
@@ -489,7 +489,7 @@
     ]
   },
   "timezone": "",
-  "title": "Agregat dispositius",
+  "title": "All devices",
   "uid": "YT20LzWMk",
   "version": 3
 }
