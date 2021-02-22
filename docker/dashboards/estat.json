@@ -63,7 +63,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1612785708497,
+  "iteration": 1613992496731,
   "links": [
     {
       "asDropdown": true,
@@ -74,7 +74,8 @@
     }
   ],
   "panels": [
-    { "content": "----\n## Open Digital Aquaculture\n----\n Per device sensor status and sensor sampling rate configuration. Select the device you want to configure from the drop-down list.\n\n",
+    {
+      "content": "----\n## Open Digital Aquaculture\n----\n Per device sensor status and sensor sampling rate configuration. Select the device you want to configure from the drop-down list.\n\n",
       "datasource": "$DB",
       "description": "",
       "fieldConfig": {
@@ -84,7 +85,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
+        "h": 4,
         "w": 24,
         "x": 0,
         "y": 0
@@ -108,7 +109,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 3
+        "y": 4
       },
       "id": 72,
       "panels": [
@@ -1805,7 +1806,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 4
+        "y": 5
       },
       "id": 43,
       "panels": [
@@ -3436,7 +3437,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 5
+        "y": 6
       },
       "id": 101,
       "panels": [
@@ -6098,5 +6099,5 @@
   "timezone": "",
   "title": "Device Configuration",
   "uid": "zLj7W6iMk",
-  "version": 10
+  "version": 20
 }

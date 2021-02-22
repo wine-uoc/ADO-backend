@@ -61,7 +61,7 @@
   ],
   "panels": [
     {
-      "content": "----\n## Open Digital Aquaculture\n----\n A panel for each sensor, collecting the data from all the active devices.\n\n",
+      "content": "----\n## Open Digital Aquaculture\n----\n A panel for each sensor, collecting the data from all the active devices. Select the sensor of interest from the drop-down list.\n\n",
       "datasource": "$DB",
       "description": "",
       "fieldConfig": {
@@ -79,7 +79,7 @@
       "id": 4,
       "mode": "markdown",
       "options": {
-        "content": "----\n## Open Digital Aquaculture\n----\n A panel for each sensor, collecting the data from all the active devices.\n\n",
+        "content": "----\n## Open Digital Aquaculture\n----\n A panel for each sensor, collecting the data from all the active devices. Select the sensor of interest from the drop-down list.\n\n",
         "mode": "markdown"
       },
       "pluginVersion": "7.1.0",
