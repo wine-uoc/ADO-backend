@@ -333,8 +333,9 @@ services:
       - GF_SMTP_FROM_ADDRESS=${MF_RECOVERY_EMAIL}
       - GF_SMTP_FROM_NAME=ADO-RECOVERY
       - GF_SMTP_SKIP_VERIFY=true
-      - GF_SERVER_DOMAIN=localhost
+      - GF_SERVER_DOMAIN=ado.wine-lab.org
       - GF_SERVER_HTTP_PORT=${MF_INFLUX_WRITER_GRAFANA_PORT}
+      - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s/
     expose:
       - ${MF_INFLUX_WRITER_GRAFANA_PORT}
     networks:
