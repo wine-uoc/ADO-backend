@@ -40,6 +40,10 @@ services:
       MF_NATS_URL: ${MF_NATS_URL}
       MF_THINGS_URL: things:${MF_THINGS_AUTH_GRPC_PORT}
       MF_JAEGER_URL: ${MF_JAEGER_URL}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
     ports:
       - 18831:${MF_MQTT_ADAPTER_PORT}
       - 8881:${MF_MQTT_ADAPTER_WS_PORT}

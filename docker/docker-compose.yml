@@ -283,10 +283,15 @@ services:
       INFLUXDB_ADMIN_PASSWORD: mainflux
     networks:
       - mainflux-base-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
     ports:
       - ${MF_INFLUX_WRITER_DB_PORT}:${MF_INFLUX_WRITER_DB_PORT}
     volumes:
       - mainflux-influxdb-volume:/var/lib/influxdb
+      - ./influx-conf/influxdb.conf:/etc/influxdb/influxdb.conf
 
   influxdb-writer:
     image: isuciu0/mainflux-influxdb-writer:04-12-2020
@@ -338,6 +343,10 @@ services:
       - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s/
     expose:
       - ${MF_INFLUX_WRITER_GRAFANA_PORT}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
     networks:
       - mainflux-base-net
     volumes:
