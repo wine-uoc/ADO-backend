@@ -20,7 +20,7 @@ services:
   nginx:
     image: nginx:1.16.0-alpine
     container_name: mainflux-nginx
-    restart: on-failure
+    restart: always
     volumes:
       - ./nginx/nginx-${AUTH-key}.conf:/etc/nginx/nginx.conf.template
       - ./nginx/entrypoint.sh:/entrypoint.sh
@@ -33,7 +33,7 @@ services:
       - ./nginx/certbot/conf:/etc/letsencrypt
       - ./nginx/certbot/www:/var/www/certbot
     ports:
-      - ${MF_NGINX_HTTP_PORT}:${MF_NGINX_HTTP_PORT}
+      - 8080:${MF_NGINX_HTTP_PORT}
       - ${MF_NGINX_SSL_PORT}:${MF_NGINX_SSL_PORT}
       - ${MF_NGINX_MQTT_PORT}:${MF_NGINX_MQTT_PORT}
       - ${MF_NGINX_MQTTS_PORT}:${MF_NGINX_MQTTS_PORT}
@@ -48,9 +48,11 @@ services:
       - http-adapter
       - ws-adapter
       - user-control
+      - grafana
   
   certbot:
     image: certbot/certbot 
+    restart: always
     volumes:
       - ./nginx/certbot/conf:/etc/letsencrypt
       - ./nginx/certbot/www:/var/www/certbot
@@ -59,14 +61,14 @@ services:
   nats:
     image: nats:1.3.0
     container_name: mainflux-nats
-    restart: on-failure
+    restart: always
     networks:
       - mainflux-base-net
 
   authn-db:
     image: postgres:10.8-alpine
     container_name: mainflux-authn-db
-    restart: on-failure
+    restart: always
     environment:
       POSTGRES_USER: ${MF_AUTHN_DB_USER}
       POSTGRES_PASSWORD: ${MF_AUTHN_DB_PASS}
@@ -79,11 +81,11 @@ services:
   authn:
     image: mainflux/authn:0.10.0
     container_name: mainflux-authn
+    restart: always
     depends_on:
       - authn-db
     expose:
       - ${MF_AUTHN_GRPC_PORT}
-    restart: on-failure
     environment:
       MF_AUTHN_LOG_LEVEL: ${MF_AUTHN_LOG_LEVEL}
       MF_AUTHN_DB_HOST: authn-db
@@ -104,7 +106,7 @@ services:
   users-db:
     image: postgres:10.8-alpine
     container_name: mainflux-users-db
-    restart: on-failure
+    restart: always
     environment:
       POSTGRES_USER: ${MF_USERS_DB_USER}
       POSTGRES_PASSWORD: ${MF_USERS_DB_PASS}
@@ -117,12 +119,12 @@ services:
   users:
     image: mainflux/users:0.10.0
     container_name: mainflux-users
+    restart: always
     volumes:
       - ./users/emailer/templates/${MF_EMAIL_TEMPLATE}:/${MF_EMAIL_TEMPLATE}
     depends_on:
       - users-db
       - authn
-    restart: on-failure
     environment:
       MF_USERS_LOG_LEVEL: ${MF_USERS_LOG_LEVEL}
       MF_USERS_DB_HOST: users-db
@@ -150,7 +152,7 @@ services:
   things-db:
     image: postgres:10.8-alpine
     container_name: mainflux-things-db
-    restart: on-failure
+    restart: always
     environment:
       POSTGRES_USER: ${MF_THINGS_DB_USER}
       POSTGRES_PASSWORD: ${MF_THINGS_DB_PASS}
@@ -163,7 +165,7 @@ services:
   things-redis:
     image: redis:5.0-alpine
     container_name: mainflux-things-redis
-    restart: on-failure
+    restart: always
     networks:
       - mainflux-base-net
     volumes:
@@ -172,10 +174,10 @@ services:
   things:
     image: mainflux/things:0.10.0
     container_name: mainflux-things
+    restart: always
     depends_on:
       - things-db
       - authn
-    restart: on-failure
     environment:
       MF_THINGS_LOG_LEVEL: ${MF_THINGS_LOG_LEVEL}
       MF_THINGS_DB_HOST: things-db
@@ -201,6 +203,7 @@ services:
   jaeger:
     image: jaegertracing/all-in-one:1.13
     container_name: mainflux-jaeger
+    restart: always
     ports:
       - ${MF_JAEGER_PORT}:${MF_JAEGER_PORT}/udp
       - ${MF_JAEGER_FRONTEND}:${MF_JAEGER_FRONTEND}
@@ -212,10 +215,10 @@ services:
   ws-adapter:
     image: mainflux/ws:0.10.0
     container_name: mainflux-ws
+    restart: always
     depends_on:
       - things
       - nats
-    restart: on-failure
     environment:
       MF_WS_ADAPTER_LOG_LEVEL: ${MF_WS_ADAPTER_LOG_LEVEL}
       MF_WS_ADAPTER_PORT: ${MF_WS_ADAPTER_PORT}
@@ -230,10 +233,10 @@ services:
   http-adapter:
     image: mainflux/http:0.10.0
     container_name: mainflux-http
+    restart: always
     depends_on:
       - things
       - nats
-    restart: on-failure
     environment:
       MF_HTTP_ADAPTER_LOG_LEVEL: debug
       MF_HTTP_ADAPTER_PORT: ${MF_HTTP_ADAPTER_PORT}
@@ -248,7 +251,7 @@ services:
   es-redis:
     image: redis:5.0-alpine
     container_name: mainflux-es-redis
-    restart: on-failure
+    restart: always
     networks:
       - mainflux-base-net
     volumes:
@@ -257,10 +260,10 @@ services:
   coap-adapter:
     image: mainflux/coap:0.10.0
     container_name: mainflux-coap
+    restart: always
     depends_on:
       - things
       - nats
-    restart: on-failure
     environment:
       MF_COAP_ADAPTER_LOG_LEVEL: ${MF_COAP_ADAPTER_LOG_LEVEL}
       MF_COAP_ADAPTER_PORT: ${MF_COAP_ADAPTER_PORT}
@@ -276,7 +279,7 @@ services:
   influxdb:
     image: influxdb:1.6.4-alpine
     container_name: mainflux-influxdb
-    restart: on-failure
+    restart: always
     environment:
       INFLUXDB_DB: mainflux
       INFLUXDB_ADMIN_USER: mainflux
@@ -296,9 +299,9 @@ services:
   influxdb-writer:
     image: isuciu0/mainflux-influxdb-writer:04-12-2020
     container_name: mainflux-influxdb-writer
+    restart: always
     depends_on:
       - influxdb
-    restart: on-failure
     environment:
       MF_INFLUX_WRITER_LOG_LEVEL: debug
       MF_NATS_URL: ${MF_NATS_URL}
@@ -320,9 +323,9 @@ services:
   grafana:
     image: grafana/grafana:7.4.0 #isuciu0/grafana:alpine-7.3.4
     container_name: mainflux-grafana
+    restart: always
     depends_on:
       - influxdb
-    restart: on-failure
     environment:
       - GF_SECURITY_ALLOW_EMBEDDING=${MF_ALLOW_EMBEDDING}
       - GF_SECURITY_ADMIN_USER=${MF_GRAFANA_ADMIN_NAME}
@@ -361,9 +364,9 @@ services:
   influxdb-reader:
     image: isuciu0/mainflux-influxdb-reader:02-01-2020
     container_name: mainflux-influxdb-reader
+    restart: always
     depends_on:
       - influxdb-writer
-    restart: on-failure
     environment:
       MF_INFLUX_READER_LOG_LEVEL: debug
       MF_THINGS_URL: things:${MF_THINGS_AUTH_GRPC_PORT}
@@ -382,9 +385,9 @@ services:
   user-control:
     image: isuciu0/user-control:19-03-2021
     container_name: mainflux-user-control
+    restart: always
     depends_on:
       - things
-    restart: on-failure
     environment:
       MF_USER_CONTROL_POSTGRES_USER: ${MF_THINGS_DB_USER}
       MF_USER_CONTROL_POSTGRES_PASSWORD: ${MF_THINGS_DB_PASS}
