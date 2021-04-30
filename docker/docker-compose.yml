@@ -383,7 +383,7 @@ services:
       - mainflux-base-net
 
   user-control:
-    image: isuciu0/user-control:19-03-2021
+    image: isuciu0/user-control:30-04-2021
     container_name: mainflux-user-control
     restart: always
     depends_on:
