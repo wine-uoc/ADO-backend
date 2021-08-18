@@ -1,4 +1,4 @@
-﻿# Copyright (c) Mainflux
+# Copyright (c) Mainflux
 # SPDX-License-Identifier: Apache-2.0
 
 version: "3.7"
@@ -43,6 +43,7 @@ services:
       - ../.env
     command: /entrypoint.sh && "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     depends_on:
+      - certbot
       - things
       - users
       - http-adapter
@@ -52,6 +53,7 @@ services:
   
   certbot:
     image: certbot/certbot 
+    container_name: mainflux-certbot
     restart: always
     volumes:
       - ./nginx/certbot/conf:/etc/letsencrypt
@@ -383,7 +385,7 @@ services:
       - mainflux-base-net
 
   user-control:
-    image: isuciu0/user-control:30-04-2021
+    image: isuciu0/user-control:noquerychannels  #19-03-2021
     container_name: mainflux-user-control
     restart: always
     depends_on:
