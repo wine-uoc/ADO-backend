@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Email</title>
+    <style>
+    .button {
+      background-color: #008CBA; /* Blue */
+      border: none;
+      color: white;
+      width:50%;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      cursor: pointer;
+      display:inline-block; /*any space between the inline elements will act as a newline and elements will be displayed one under another instead of inline*/
+    }
+
+    .selectbox{
+      background-color:black;
+    }
+    </style>
+</head>
+
+<body>
+
+    <div>
+  
+        <h1> Hi {{ name }}, </h1>
+        <h2> To reset your  ADO-node password, please click the following link within 1 hour. </h2>
+        <a href="{{pageURL}}"> Reset Password</a>
+        <h2> Not working? Try copying and pasting it into your browser.</h2>
+
+    </div>
+
+</body>
+
+</html>

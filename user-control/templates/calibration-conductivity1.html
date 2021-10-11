@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalConductivity1</title>
+    <style>
+    .button {
+      background-color: #008CBA; /* Blue */
+      border: none;
+      color: white;
+      width:20%;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      cursor: pointer;
+      display:inline-block; /*any space between the inline elements will act as a newline and elements will be displayed one under another instead of inline*/
+    }
+
+    .selectbox{
+      background-color:black;
+    }
+    </style>
+</head>
+
+<body style="background-color:black; color:white;">
+
+    <h1 style="margin-top: 80px">Conductivity (1-15 ms/cm) Sensor Calibration</h1>
+        
+    <p> Wash the probe with distilled water, then absorb the residual water-drops with paper. Insert the probe into the standard buffer solution of 1413 us/cm, stir gently, until the values are stable, then press the button below.</p>
+    <button id = "db1button" class = "button" > Record 1413 us/cm </button>
+            <br>
+
+    <p>Wash the probe with distilled water, then absorb the residual water-drops with paper. Insert the probe into the standard buffer solution of 12.88 ms/cm, stir gently, until the values are stable, then press the button below.</p>
+
+    <button id = "db2button" class = "button"> Record 12.88 ms/cm </button>
+            <p></p>
+
+    <div id="div2">{{message}}</div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        $("button").click(function(e){
+          var dev = '{{ device }}';
+          var chan = '{{ channel }}';
+          var sen = '{{ sensor }}';
+          var button = e.target.id;
+          var db = "";
+          if (button == "uploadbutton"){
+              $.ajax({url: "/control/calibration/Check/" + dev + "/" + chan +"/sensors/"+ sen, success: function(result){
+                if (result == "OK"){
+                  $(e.target).css('background-color','green');
+                  $("#div2").html(""); 
+                }
+                $("#display-upload-result").html(result);
+              }});
+              setTimeout(function(){ $(e.target).css('background-color','#008CBA');$("#div1").html(""); }, 3000);
+
+          }
+          else
+          {
+            if (button == "db1button") db = "1"; else db = "2";
+            $.ajax({url: "/control/calibration/Set/"+db+ "/" + dev + "/" + chan +"/sensors/"+ sen, success: function(result){
+              if (result == "OK"){
+                $(e.target).css('background-color','green');
+                $("#div2").html(""); 
+              }
+              $("#display-upload-result").html(result);
+            }});
+
+            setTimeout(function(){ $(e.target).css('background-color','#008CBA');$("#div1").html(""); }, 3000);  
+          }
+        });
+      });
+
+    </script>
+
+</body>
+
+</html>

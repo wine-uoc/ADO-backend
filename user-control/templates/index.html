@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SetSR</title>
+    <style>
+    .button {
+      background-color: #008CBA; /* Blue */
+      border: none;
+      color: white;
+      width:50%;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      cursor: pointer;
+      display:inline-block; /*any space between the inline elements will act as a newline and elements will be displayed one under another instead of inline*/
+    }
+
+    .selectbox{
+      background-color:black;
+    }
+    </style>
+</head>
+
+<body>
+
+    <div>   
+    
+        <select id="SR" name="SR" class="button selectbox">
+          <option value="0">OFF</option>
+          <option value="5">5s</option>
+          <option value="15">15s</option>
+          <option value="30">30s</option>
+          <option value="60">60s</option>
+          <option value="120">120s</option>
+        </select><button class = "button" id="SRbtn">Set</button>
+    <div id="div1"></div>
+    <div id="div2">{{message}}</div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        $("button").click(function(){
+          var sr = document.getElementById("SR");
+          var srVal = sr.options[sr.selectedIndex].value;
+          var dev = '{{ device }}';
+          var chan = '{{ channel }}';
+          var sen = '{{ sensor }}';
+          var button = document.getElementById(SRbtn);
+          $.ajax({url: "/control/SendMessage/"+srVal+ "/" + dev + "/" + chan +"/sensors/" + sen, success: function(result){
+            if (result == "OK"){
+              $("#SRbtn").css('background-color','green');
+              $("#div2").html(""); 
+            }
+            $("#div1").html(result);
+            }});
+
+          setTimeout(function(){ $("#SRbtn").css('background-color','#008CBA');$("#div1").html(""); }, 3000);
+        });
+      });
+
+    </script>
+
+</body>
+
+</html>

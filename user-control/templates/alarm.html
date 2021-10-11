@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SetAlarm</title>
+    <style>
+    .button {
+      background-color: #008CBA; /* Blue */
+      border: none;
+      color: white;
+      width:100%;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      cursor: pointer;
+      display:inline-block; /*any space between the inline elements will act as a newline and elements will be displayed one under another instead of inline*/
+    }
+    .myDiv {
+      width: 50%;
+      display:inline-block;
+    }
+
+    .selectbox{
+      background-color:black;
+      color: white;
+    }
+
+    .aParent div {
+      float: left;
+      clear: none;
+      width: 25%;
+      background-color: black;
+      color: white; 
+    }
+
+    </style>
+</head>
+
+<body style= "background-color: black">
+
+    <div class= "aParent">
+
+    <div> 
+      <h1> Current {{sensor}} alarm:</h1>
+      <p id="pmin">Lower Limit: {{min_val}}</p>
+      <p id="pmax">Upper Limit: {{max_val}}</p>
+      <h1></h1>
+    </div>
+
+    <div> 
+      <h1> Set New Alarm Limits </h1>
+       
+        <label for="min-limit" style="color:white">Lower Limit</label>
+        <br> 
+        <input type=number id="min-limit" name="min-limit" class="button" value="0">
+        <br>
+        <label for="max-limit" style="color:white">Upper Limit</label>
+        <br>
+        <input type=number id="max-limit" name="max-limit" class="button" value="0">
+        <h1></h1>
+        <button class = "button" id="SetAlarmBtn">Set Limits</button>
+      
+    <div id="div1"></div>
+    <div id="div2">{{message}}</div>
+    </div>
+
+
+  </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        $("button").click(function(){
+          var min_value = document.getElementById("min-limit").value;
+          var max_value = document.getElementById("max-limit").value;
+          var org = '{{ organization }}';
+          var chan = '{{ channel }}';
+          var sen = '{{ sensor }}';
+          var dash = '{{ dashboard_name }}';
+          var user = '{{ user_login }}';
+          var button = document.getElementById(SetAlarmBtn);
+          $.ajax({url: "/control/UpdateAlarmDashboard/"+chan+ "/sensors/" + sen + "/" + org +"/" + dash +"/"+ user + "/"+ min_value +"/"+ max_value, success: function(result){
+            if (result == "OK"){
+              $("#SetAlarmBtn").css('background-color','green');
+              $("#div2").html(""); 
+            }
+            $("#div1").html(result);
+            }});
+
+          setTimeout(function(){ $("#SRbtn").css('background-color','#008CBA');$("#div1").html(""); }, 3000);
+        });
+      });
+
+    </script>
+
+</body>
+
+</html>
